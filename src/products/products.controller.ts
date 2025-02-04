@@ -10,40 +10,40 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   // @Post()
-  @MessagePattern({ cmd: 'create_product'})
+  @MessagePattern({ cmd: 'create_product' })
   create(@Payload() createProductDto: CreateProductDto) {
-  // create(@Body() createProductDto: CreateProductDto) {
+    // create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
   // @Get()
-  @MessagePattern({cmd: 'find_all_products'})
-  findAll(@Payload() paginationDto : PaginationDto) {
-  // findAll(@Query() paginationDto : PaginationDto) {
+  @MessagePattern({ cmd: 'find_all_products' })
+  findAll(@Payload() paginationDto: PaginationDto) {
+    // findAll(@Query() paginationDto : PaginationDto) {
     return this.productsService.findAll(paginationDto);
   }
 
   // @Get(':id')
-  @MessagePattern({cmd: 'find_one_product'})
+  @MessagePattern({ cmd: 'find_one_product' })
   findOne(@Payload('id') id: string) {
-  // findOne(@Param('id') id: string) {
-  return this.productsService.findOne(+id);
+    // findOne(@Param('id') id: string) {
+    return this.productsService.findOne(+id);
   }
 
   // @Patch(':id')
-  @MessagePattern({cmd: 'update_product'})
+  @MessagePattern({ cmd: 'update_product' })
   update(
-    // @Param('id') id: string, 
+    // @Param('id') id: string,
     // @Body() updateProductDto: UpdateProductDto
-    @Payload() updateProductDto: UpdateProductDto
-    ) {
+    @Payload() updateProductDto: UpdateProductDto,
+  ) {
     return this.productsService.update(updateProductDto);
   }
 
   // @Delete(':id')
-  @MessagePattern({cmd: 'delete_product'})
+  @MessagePattern({ cmd: 'delete_product' })
   remove(@Payload('id', ParseIntPipe) id: number) {
-  // remove(@Param('id') id: string) {
-    return this.productsService.remove(id); 
+    // remove(@Param('id') id: string) {
+    return this.productsService.remove(id);
   }
 }
