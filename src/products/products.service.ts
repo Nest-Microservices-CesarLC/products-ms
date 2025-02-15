@@ -5,7 +5,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { RpcException } from '@nestjs/microservices';
 
-//extend Prisma client to acces to database
+//extend Prisma client to access to database
 @Injectable()
 export class ProductsService extends PrismaClient implements OnModuleInit {
   private readonly logger = new Logger('ProductsService');
@@ -85,7 +85,29 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
     });
 
     return {
-      message: `The propduct with id: #${id} was deleted successfully`,
+      message: `The product with id: #${id} was deleted successfully`,
     };
+  }
+
+  async validateProducts(ids: any) {
+    // ids = [5, 6];
+    ids = Array.from(new Set(ids));
+
+    const products = await this.product.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    if (products.length !== ids.length) {
+      throw new RpcException({
+        message: `Some products are not found`,
+        state: HttpStatus.BAD_REQUEST,
+      });
+    }
+
+    return products;
   }
 }
