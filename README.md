@@ -11,7 +11,13 @@
 npx prisma migrate dev
 ```
 
-5. Start the development server:
+5. Deploy NATS server
+
+```
+docker run -d --name nats-main -p 4222:4222 -p 8222:8222 nats
+```
+
+6. Start the development server:
 
 ```
 npm run start:dev
